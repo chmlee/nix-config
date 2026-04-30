@@ -1,0 +1,150 @@
+/* =========================================================
+   Waybar style.css — Catppuccin Mocha (GTK-safe)
+   Unified palette + consistent workspaces + severity states
+   ========================================================= */
+
+/* ---------- Catppuccin Mocha palette ---------- */
+@define-color base      #1e1e2e;
+@define-color mantle    #181825;
+@define-color crust     #11111b;
+
+@define-color text      #cdd6f4;
+@define-color subtext   #bac2de;
+@define-color muted     #9399b2;
+
+@define-color surface0  #313244;
+@define-color surface1  #45475a;
+
+/* Accents */
+@define-color blue      #89b4fa;
+@define-color green     #a6e3a1;
+@define-color peach     #fab387;
+@define-color yellow    #f9e2af;
+@define-color red       #f38ba8;
+@define-color teal      #94e2d5;
+@define-color lavender  #b4befe;
+
+/* Bar + state backgrounds */
+@define-color bar_bg    rgba(30, 30, 46, 0.88);
+@define-color warn_bg   rgba(249, 226, 175, 0.28);
+@define-color crit_bg   rgba(243, 139, 168, 0.38);
+
+/* Workspace backgrounds */
+@define-color ws_hover  rgba(137, 180, 250, 0.16);
+@define-color ws_focus  rgba(137, 180, 250, 0.26);
+
+/* ---------- Global reset ---------- */
+* {
+  border: none;
+  border-radius: 0;
+  min-height: 0;
+  box-shadow: none;
+}
+
+/* ---------- Bar ---------- */
+window#waybar {
+  background: @bar_bg;
+  color: @text;
+  font-size: 12px;
+}
+
+/* =========================================================
+   Workspaces
+   ========================================================= */
+
+#workspaces {
+  padding: 0 5px;
+}
+
+#workspaces button {
+  padding: 0 5px;
+  margin: 0px 0px;
+  color: @subtext;
+  background: transparent;
+}
+
+#workspaces button.focused {
+  color: @text;
+  background: @ws_focus;
+}
+
+#workspaces button:hover {
+  background: @ws_hover;
+}
+
+#workspaces button.urgent {
+  color: @text;
+  background: @crit_bg;
+}
+
+#mode {
+  padding: 0 12px;
+
+  background: #f9e2af;  /* fully opaque yellow */
+  color: #1e1e2e;                        /* dark text */
+
+  font-weight: 600;
+}
+
+/* =========================================================
+   Modules (shared)
+   ========================================================= */
+
+#network,
+#pulseaudio,
+#battery,
+#clock,
+#cpu,
+#memory {
+  padding: 0 5px;   /* literal spacing — GTK-safe */
+  margin: 0px 0px;
+  background: transparent;
+  color: @text;
+}
+
+/* Identity colors */
+#network    { color: @blue; }
+#pulseaudio { color: @peach; }
+#battery    { color: @green; }
+#clock      { color: @text; font-weight: 500; }
+#cpu    { color: @lavender; }
+#memory { color: @teal; }
+
+/* =========================================================
+   Severity states (single, consistent approach)
+   ========================================================= */
+
+#battery.warning {
+  background: @warn_bg;
+  color: @text;
+}
+
+#battery.critical {
+  background: @crit_bg;
+  color: @text;
+}
+
+#network.disconnected {
+  background: @crit_bg;
+  color: @text;
+}
+
+#cpu.warning {
+  background: @warn_bg;
+  color: @text;
+}
+
+#cpu.critical {
+  background: @crit_bg;
+  color: @text;
+}
+
+#memory.warning {
+  background: @warn_bg;
+  color: @text;
+}
+
+#memory.critical {
+  background: @crit_bg;
+  color: @text;
+}

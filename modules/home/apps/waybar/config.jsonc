@@ -1,0 +1,91 @@
+{
+  "layer": "top",
+  "position": "top",
+  "height": 25,
+  "spacing": 1,
+
+  "modules-left": ["sway/workspaces", "sway/mode"],
+  "modules-right": ["cpu", "memory", "network", "pulseaudio","battery",  "clock"],
+
+  "sway/workspaces": {
+    "disable-scroll": true,
+  },
+
+  "sway/window": {
+    "max-length": 60
+  },
+
+  "network": {
+    "interval": 5,
+    "format-alt": "{icon} ↓{bandwidthDownBits}  ↑{bandwidthUpBits}",
+    "format-wifi": "{icon} {signalStrength}%",
+    "format-icons": ["󰤯 ", "󰤟 ", "󰤢 ", "󰤥 ", "󰤨 "],
+
+    "format-ethernet": "󰈀 ",
+    "format-disconnected": "󰤭 ",
+
+    "tooltip": true,
+    "tooltip-format": "{essid} {ipaddr}"
+  },
+
+  "pulseaudio": {
+    "format": "{icon} {volume}%",
+    "format-muted": "   0%",
+    "format-icons": {
+      "default": ["  "],
+    },
+    "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+  },
+
+  "battery": {
+    "format": "{icon} {capacity}%",
+    "format-alt": "{icon} {time}  󱐋 {power}W",
+    "format-charging": "{icon} {capacity}%",
+
+    "states": {
+      "warning": 25,
+      "critical": 10
+    },
+    "format-icons": {
+      "default": ["󰂃", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+      "charging": ["󰢜 ", "󰂆 ", "󰂇 ", "󰂈 ", "󰢝 ", "󰂉 ", "󰢞 ", "󰂊 ", "󰂋 ", "󰂅 "],
+    }
+
+  },
+  "clock": {
+    "format": "󰥔  {:%H:%M}",
+    "tooltip-format": "{:%a %d %b %Y}"
+  },
+    
+  "cpu": {
+    "interval": 2,
+    "format": "  {usage}%",
+    "format-alt":"  {usage}% {icon0}{icon1}{icon2}{icon3}{icon4}{icon5}{icon6}{icon7}{icon8}{icon9}{icon10}{icon11}{icon12}{icon13}{icon14}{icon15}    {avg_frequency} GHz",
+    "states": {
+      "warning": 60,
+      "critical": 85,
+    },
+    "format-icons": [
+      "<span color='#b4befe'>▁</span>",  // lavender (cool)
+      "<span color='#89b4fa'>▂</span>",  // blue
+      "<span color='#cdd6f4'>▃</span>",  // text
+      "<span color='#cdd6f4'>▄</span>",  // text
+      "<span color='#f9e2af'>▅</span>",  // yellow (warm)
+      "<span color='#f9e2af'>▆</span>",  // yellow
+      "<span color='#fab387'>▇</span>",  // peach (hot)
+      "<span color='#f38ba8'>█</span>"   // red (very hot)
+    ],
+    "tooltip": true
+  },
+
+  "memory": {
+    "interval": 5,
+    "format": "  {percentage}%",
+    "format-alt": "   {used}GiB / {avail}GiB",
+    "states": {
+      "warning": 70,
+      "critical": 90,
+    },
+    "tooltip": true
+  }
+}

@@ -1,0 +1,14 @@
+keys:
+  - &T14p_root "age15w7hvcnr3m5cy8zujmrcnejncq8kltu5q5ntzxv6489hqsuq3eaqtcjtn6"
+  - &T14p_root_old "age1w9pd9yzszvezcfvc680wf6zegnqcsvfds9jjmafgheelqevllvsql7ncax"
+  - &local_T14p "age1y38cnfvt42ar4seqx8n2cw0ynwls2rdl6jyzhv9wuv6jcfqrwckqwlh9p0"
+  - &server_hetzner "age1sjq27nh4znq75fzzx6epwd6700wgg23v9xenzvmam4kmncvjdcesakv9e2"
+
+creation_rules:
+  - path_regex: secrets.yaml$
+    key_groups:
+    - age:
+      - *local_T14p
+      - *server_hetzner
+      - *T14p_root_old
+      - *T14p_root
