@@ -41,6 +41,8 @@
   home.packages = with pkgs; [
     neofetch
     ranger
+    lazygit
+    audacity
     gzip
     poetry
     cmdstan
@@ -89,6 +91,7 @@
       "test"
       "vm"
       "note"
+      "music"
       ".ssh"
 
       ".local/share/jupyter/runtime" # needed for molten

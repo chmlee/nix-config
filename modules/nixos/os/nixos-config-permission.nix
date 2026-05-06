@@ -4,6 +4,7 @@
 
   systemd.tmpfiles.rules = [
     "d /etc/nixos 2775 root nixos-config - -"
+    "Z /etc/nixos 2775 root nixos-config - -"
   ];
 
   programs.git = {
