@@ -26,6 +26,7 @@ in
         "wheel"
         "networkmanager"
         "video"
+        "nixos-config"
       ];
       hashedPasswordFile = config.sops.secrets."users/louis/hashedPassword".path;
     };

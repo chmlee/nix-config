@@ -34,6 +34,7 @@ in
       fzf
       libinput
       wdisplays
+      wl-mirror
     ];
 
     programs.nix-ld.enable = true;
