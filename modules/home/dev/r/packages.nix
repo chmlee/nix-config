@@ -1,6 +1,8 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  gtsummary
+  rstan
   PCovR
   calculus
   COUNT
