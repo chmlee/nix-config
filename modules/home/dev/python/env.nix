@@ -6,6 +6,7 @@ pkgs.python3.withPackages (
     pnglatex
     matplotlib
     seaborn
+    scikit-learn
     sqlalchemy
     plotly
     pyperclip
