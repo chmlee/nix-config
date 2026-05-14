@@ -8,7 +8,7 @@ let
   cfg = config.my.services.mullvad;
 in
 {
-  options.my.services.wacom = {
+  options.my.services.mullvad = {
     enable = lib.mkEnableOption "Enable Mullvad";
   };
 
