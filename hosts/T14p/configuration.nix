@@ -39,7 +39,7 @@ in
     keyd.enable = true;
     audio.enable = true;
     wacom.enable = true;
-
+    mullvad.enable = true;
   };
 
   users.mutableUsers = false;
