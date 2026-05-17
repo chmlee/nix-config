@@ -19,6 +19,7 @@ in
       defaultEditor = true;
 
       plugins = with pkgs.vimPlugins; [
+        diffview-nvim
         nvim-treesitter.withAllGrammars
         nvim-lspconfig
         telescope-nvim
