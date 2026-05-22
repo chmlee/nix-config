@@ -1,6 +1,10 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  R_matlab
+  rmatio
+  ggsurvfit
+  pammtools
   gtsummary
   rstan
   PCovR

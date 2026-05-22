@@ -41,6 +41,8 @@
   home.packages = with pkgs; [
     neofetch
     ranger
+    entr
+    inetutils
     lazygit
     audacity
     gzip
