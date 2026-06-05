@@ -53,6 +53,7 @@ in
 
       extraPackages = with pkgs; [
         #quarto
+        inotify-tools
         pyright
         basedpyright
         python3Packages.python-lsp-server
