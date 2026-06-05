@@ -1,6 +1,13 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  mstate
+  tree
+  EFA_dimensions
+  psych
+  GPArotation
+  nFactors
+  here
   R_matlab
   rmatio
   ggsurvfit
