@@ -6,6 +6,7 @@ pkgs.python3.withPackages (
     pnglatex
     matplotlib
     seaborn
+    scrapy
     scikit-learn
     sqlalchemy
     plotly
@@ -18,5 +19,7 @@ pkgs.python3.withPackages (
     pandas-stubs
     scipy
     jupyter-cache
+    jupyter
+    notebook
   ]
 )
