@@ -3,6 +3,18 @@
   pkgs,
   ...
 }:
+let
+  my-vscode = pkgs.vscode-with-extensions.override {
+    vscode = pkgs.vscode;
+    vscodeExtensions = with pkgs.vscode-extensions; [
+      ms-toolsai.jupyter
+      ms-toolsai.jupyter-keymap
+      ms-toolsai.jupyter-renderers
+      ms-python.python
+      asvetliakov.vscode-neovim
+    ];
+  };
+in
 {
   home.username = "louis";
   home.homeDirectory = "/home/louis";
@@ -42,6 +54,7 @@
     neofetch
     ranger
     entr
+    my-vscode
     inetutils
     lazygit
     audacity
