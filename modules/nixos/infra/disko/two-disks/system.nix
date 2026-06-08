@@ -1,8 +1,41 @@
 { lib, config, ... }:
 let
   cfg = config.my.infra.disko.twoDisk;
+  maybeLuks =
+    name: content:
+    if cfg.encryption.enable then
+      {
+        type = "luks";
+        inherit name content;
+      }
+    else
+      content;
+
+  esp = {
+    size = cfg.espSize;
+    type = "EF00";
+    content = {
+      type = "filesystem";
+      format = "vfat";
+      mountpoint = "/boot";
+    };
+  };
+
+  btrfs = {
+    type = "btrfs";
+    subvolumes = {
+      "@" = {
+        mountpoint = "/";
+      };
+
+      "@nix" = {
+        mountpoint = "/nix";
+      };
+    };
+  };
+
 in
-{
+  {
   config = lib.mkIf cfg.enable {
     disko.devices.disk.system = {
       type = "disk";
@@ -10,29 +43,11 @@ in
       content = {
         type = "gpt";
         partitions = {
-          ESP = {
-            size = cfg.espSize;
-            type = "EF00";
-            content = {
-              type = "filesystem";
-              format = "vfat";
-              mountpoint = "/boot";
-            };
-          };
+          ESP = esp;
 
           luks = {
             size = "100%";
-            content = {
-              type = "luks";
-              name = cfg.systemLuksName;
-              content = {
-                type = "btrfs";
-                subvolumes = {
-                  "@" = { mountpoint = "/"; };
-                  "@nix" = { mountpoint = "/nix"; };
-                };
-              };
-            };
+            content = maybeLuks cfg.systemLuksName btrfs;
           };
         };
       };

@@ -21,13 +21,23 @@
       description = "Size of the EFI System Partition.";
     };
 
+    encryption = {
+      enable = lib.mkOption {
+        type = lib.types.bool;
+        default = true;
+        description = "Whether to wrap both system and state disks in LUKS.";
+      };
+    };
+
     systemLuksName = lib.mkOption {
       type = lib.types.str;
       default = "crypt-system";
     };
+
     stateLuksName = lib.mkOption {
       type = lib.types.str;
       default = "crypt-state";
     };
+
   };
 }

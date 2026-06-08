@@ -1,5 +1,6 @@
 {
   imports = [
     ./two-disks
+    ./btrfs
   ];
 }

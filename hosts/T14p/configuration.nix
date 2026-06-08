@@ -1,7 +1,7 @@
 { ... }:
 let
-  stateDevice = "/dev/disk/by-id/nvme-WDBRPG0010BNC-WRSN_21034A800817";
-  systemDevice = "/dev/disk/by-id/nvme-UMIS_RPJYJ1T24MML1AWQ_SS1D71533X1RC53B20DD";
+  osDevice = "/dev/disk/by-id/nvme-WDBRPG0010BNC-WRSN_21034A800817";
+  dataDevice = "/dev/disk/by-id/nvme-UMIS_RPJYJ1T24MML1AWQ_SS1D71533X1RC53B20DD";
 in
 {
   imports = [
@@ -24,9 +24,43 @@ in
       defaultSopsFile = ../../secrets.yaml;
       ageKeyFile = "/persist/sops/key.txt";
     };
-    disko.twoDisk = {
-      enable = true;
-      inherit stateDevice systemDevice;
+  };
+
+  my.infra.disko.btrfs = {
+    enable = true;
+    topology = "dual-disk";
+
+    disks = {
+      os = {
+        device = osDevice;
+        encrypted = true;
+        # luksName = "crypted-os";
+      };
+
+      data = {
+        device = dataDevice;
+        encrypted = true;
+        # luksName = "crypted-data";
+      };
+    };
+
+    filesystems = {
+      os = {
+        disk = "os";
+        subvolumes = [
+          "root"
+          "nix"
+        ];
+      };
+
+      data = {
+        disk = "data";
+        subvolumes = [
+          "persist"
+          "data"
+          "postgresql"
+        ];
+      };
     };
   };
 
