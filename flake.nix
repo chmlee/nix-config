@@ -62,5 +62,20 @@
           }
         ];
       };
+
+      nixosConfigurations.trantor = nixpkgs.lib.nixosSystem {
+        inherit system;
+
+        specialArgs = {
+          inherit inputs self;
+        };
+
+        modules = [
+          ./hosts/trantor/configuration.nix
+
+          inputs.disko.nixosModules.disko
+          ./modules/nixos/infra/disko
+        ];
+      };
     };
 }
