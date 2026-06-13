@@ -31,42 +31,6 @@ in
     "flakes"
   ];
 
-  my.infra.disko.btrfs = {
-    enable = true;
-    topology = "dual-disk";
-
-    disks = {
-      os = {
-        device = osDevice;
-        encrypted = false;
-      };
-
-      data = {
-        device = dataDevice;
-        encrypted = false;
-      };
-    };
-
-    filesystems = {
-      os = {
-        disk = "os";
-        subvolumes = [
-          "root"
-          "nix"
-        ];
-      };
-
-      data = {
-        disk = "data";
-        subvolumes = [
-          "persist"
-          "data"
-          "postgresql"
-        ];
-      };
-    };
-  };
-
   services.openssh = {
     enable = true;
     openFirewall = true;
@@ -85,11 +49,6 @@ in
     ];
   };
 
-  # users.mutableUsers = false;
-
-  # boot.loader.systemd-boot.enable = true;
-  # boot.loader.efi.canTouchEfiVariables = true;
-
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
     enable = true;
@@ -98,6 +57,24 @@ in
     device = "nodev";
   };
   boot.loader.efi.canTouchEfiVariables = false;
+  boot.initrd.network = {
+    enable = true;
+
+    ssh = {
+      enable = true;
+      port = 2222;
+
+      authorizedKeys = [
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8hnz1WkRNCBybhR+FKJfxt/bxaMeqivBGSz55rIRr7 louis@T14p"
+      ];
+
+      hostKeys = [
+        "/etc/ssh/initrd_ssh_host_ed25519_key"
+      ];
+    };
+  };
+
+  boot.kernelParams = [ "ip=dhcp" ];
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 

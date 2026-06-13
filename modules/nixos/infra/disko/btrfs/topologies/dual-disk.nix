@@ -5,7 +5,6 @@ let
   builders = import ../builders.nix { inherit lib; };
 
   inherit (builders) mkBtrfs maybeLuks mkEsp;
-
   mkFsContent =
     fsName:
     let
@@ -21,9 +20,11 @@ let
           disk.luksName
         else
           "crypted-${fsName}";
+
+      keyFile = disk.keyFile;
     in
     maybeLuks {
-      inherit encrypted luksName;
+      inherit encrypted luksName keyFile;
       content = mkBtrfs fs.subvolumes;
     };
 in

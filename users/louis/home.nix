@@ -136,6 +136,10 @@ in
     enable = true;
   };
 
+  home.sessionVariables = {
+    SOPS_AGE_KEY_FILE = "/persist/sops/key.txt";
+  };
+
   services.ssh-agent.enable = true;
 
 }

@@ -48,6 +48,16 @@ in
                 If null, defaults to "crypted-<diskName>" or "crypted-<filesystemName>".
               '';
             };
+
+            keyFile = mkOption {
+              type = types.nullOr types.str;
+              default = null;
+              description = ''
+                Optional path to a LUKS key file in the installer environment.
+                This should match the remote path passed to nixos-anywhere
+                via --disk-encryption-keys.
+              '';
+            };
           };
         }
       );

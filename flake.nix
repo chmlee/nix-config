@@ -35,6 +35,25 @@
     { self, nixpkgs, ... }@inputs:
     let
       system = "x86_64-linux";
+      mkTrantor =
+        trantorProfile:
+        nixpkgs.lib.nixosSystem {
+          inherit system;
+
+          specialArgs = {
+            inherit inputs self trantorProfile;
+          };
+
+          modules = [
+            ./hosts/trantor/configuration.nix
+            ./hosts/trantor/disk.nix
+
+            inputs.disko.nixosModules.disko
+
+            # Only your disko module subtree, not all modules/nixos.
+            ./modules/nixos/infra/disko
+          ];
+        };
     in
     {
 
@@ -63,19 +82,7 @@
         ];
       };
 
-      nixosConfigurations.trantor = nixpkgs.lib.nixosSystem {
-        inherit system;
-
-        specialArgs = {
-          inherit inputs self;
-        };
-
-        modules = [
-          ./hosts/trantor/configuration.nix
-
-          inputs.disko.nixosModules.disko
-          ./modules/nixos/infra/disko
-        ];
-      };
+      nixosConfigurations.trantor = mkTrantor "prod";
+      nixosConfigurations.trantor-vm = mkTrantor "vm";
     };
 }
