@@ -5,6 +5,7 @@ let
 in
 {
   imports = [
+    ./impermanence.nix
     ./hardware.nix
   ];
 

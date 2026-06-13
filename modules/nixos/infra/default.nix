@@ -1,8 +1,9 @@
 {
   imports = [
     ./disko
-    ./impermanence
+    # ./impermanence
 
     ./sops.nix
+    ./impermanence.nix
   ];
 }
