@@ -1,6 +1,9 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  modelsummary
+  broom_helpers
+  randomForest
   mstate
   tree
   EFA_dimensions
