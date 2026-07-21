@@ -4,17 +4,12 @@
   pkgs,
   ...
 }:
-
-let
-  osId = "scsi-0QEMU_QEMU_HARDDISK_120278671";
-  dataId = "scsi-0HC_Volume_104473479";
-  osDevice = "/dev/disk/by-id/${osId}";
-  dataDevice = "/dev/disk/by-id/${dataId}";
-in
 {
   imports = [
     (modulesPath + "/profiles/qemu-guest.nix")
     (modulesPath + "/installer/scan/not-detected.nix")
+    ./disk.nix
+    ./impermanence.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -36,8 +31,8 @@ in
     openFirewall = true;
     ports = [ 22 ];
     settings = {
-      PasswordAuthentication = false;
-      PermitRootLogin = "prohibit-password";
+      PasswordAuthentication = true;
+      PermitRootLogin = "yes";
     };
   };
 
@@ -48,6 +43,7 @@ in
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8hnz1WkRNCBybhR+FKJfxt/bxaMeqivBGSz55rIRr7 louis@T14p"
     ];
   };
+  users.users.root.initialPassword = "changeme";
 
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
@@ -79,4 +75,13 @@ in
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
   system.stateVersion = "25.11";
+
+  my.services.forgejo = {
+    enable = true;
+    domain = "git.louisclee.com";
+    acmeEmail = "louis@louisclee.com";
+    httpPort = 3000;
+    sshPort = 22222;
+  };
+
 }

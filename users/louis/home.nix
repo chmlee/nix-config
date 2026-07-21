@@ -53,6 +53,8 @@ in
   home.packages = with pkgs; [
     neofetch
     ranger
+    # kdePackages.kdenlive
+    shotcut
     entr
     my-vscode
     inetutils
@@ -107,6 +109,7 @@ in
       "vm"
       "note"
       "music"
+      "vid"
       ".ssh"
 
       ".local/share/jupyter/runtime" # needed for molten

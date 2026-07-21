@@ -1,6 +1,7 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  keras
   modelsummary
   broom_helpers
   randomForest

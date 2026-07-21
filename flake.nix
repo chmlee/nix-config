@@ -29,60 +29,90 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-anywhere = {
+      url = "github:nix-community/nixos-anywhere";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      nixos-anywhere,
+      ...
+    }@inputs:
     let
       system = "x86_64-linux";
-      mkTrantor =
-        trantorProfile:
+
+      mkHost =
+        {
+          host,
+          specialArgs ? { },
+          modules ? [ ],
+        }:
         nixpkgs.lib.nixosSystem {
           inherit system;
 
           specialArgs = {
-            inherit inputs self trantorProfile;
-          };
+            inherit inputs self;
+          }
+          // specialArgs;
 
           modules = [
-            ./hosts/trantor/configuration.nix
-            ./hosts/trantor/disk.nix
+            ./hosts/${host}/configuration.nix
+
+            ./users/default.nix
+            self.nixosModules.default
 
             inputs.disko.nixosModules.disko
+            inputs.impermanence.nixosModules.impermanence
+            inputs.home-manager.nixosModules.home-manager
+            inputs.sops-nix.nixosModules.sops
 
-            # Only your disko module subtree, not all modules/nixos.
-            ./modules/nixos/infra/disko
-          ];
+            {
+              home-manager.useGlobalPkgs = true;
+              home-manager.useUserPackages = true;
+              home-manager.extraSpecialArgs = {
+                inherit inputs self;
+              }
+              // specialArgs;
+            }
+          ]
+          ++ modules;
         };
     in
     {
 
+      packages.${system}.nixos-anywhere = nixos-anywhere.packages.${system}.default;
+
+      apps.${system}.nixos-anywhere = {
+        type = "app";
+        program = "${self.packages.${system}.nixos-anywhere}/bin/nixos-anywhere";
+      };
+
       nixosModules.default = import ./modules/nixos;
       homeManagerModules.default = import ./modules/home;
 
-      nixosConfigurations.T14p = nixpkgs.lib.nixosSystem {
-        inherit system;
-        specialArgs = { inherit inputs self; };
-        modules = [
-          ./hosts/T14p/configuration.nix
-
-          ./users/default.nix
-          self.nixosModules.default
-
-          inputs.disko.nixosModules.disko
-          inputs.impermanence.nixosModules.impermanence
-          inputs.home-manager.nixosModules.home-manager
-          inputs.sops-nix.nixosModules.sops
-
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = { inherit inputs self; };
-          }
-        ];
+      nixosConfigurations.T14p = mkHost {
+        host = "T14p";
       };
 
-      nixosConfigurations.trantor = mkTrantor "prod";
-      nixosConfigurations.trantor-vm = mkTrantor "vm";
+      nixosConfigurations.trantor = mkHost {
+        host = "trantor";
+
+        specialArgs = {
+          trantorProfile = "prod";
+        };
+      };
+
+      nixosConfigurations.trantor-vm = mkHost {
+        host = "trantor";
+
+        specialArgs = {
+          trantorProfile = "vm";
+        };
+      };
     };
 }

@@ -20,7 +20,8 @@ in
     ];
     nixpkgs.config.allowUnfree = true;
 
-    time.timeZone = "Europe/Amsterdam";
+    # time.timeZone = "Europe/Amsterdam";
+    time.timeZone = "Asia/Taipei";
 
     environment.systemPackages = with pkgs; [
       vim

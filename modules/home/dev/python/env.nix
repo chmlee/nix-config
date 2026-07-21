@@ -6,6 +6,8 @@ pkgs.python3.withPackages (
     pnglatex
     matplotlib
     seaborn
+    keras
+    tensorflow
     scrapy
     scikit-learn
     sqlalchemy

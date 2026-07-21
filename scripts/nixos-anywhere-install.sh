@@ -69,6 +69,6 @@ if [[ "$confirm" != "y" && "$confirm" != "Y" ]]; then
 fi
 
 NIX_SSHOPTS="-i $ssh_key -o IdentitiesOnly=yes" \
-nix run github:nix-community/nixos-anywhere -- \
+nix run .#nixos-anywhere --no-update-lock-file -- \
   "${args[@]}" \
   "root@$target"

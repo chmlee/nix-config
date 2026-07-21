@@ -16,7 +16,7 @@ in
   config = lib.mkIf cfg.enable {
 
     users.users.root = {
-      initialPassword = "password";
+      initialPassword = "changeme";
       # hashedPasswordFile = config.sops.secrets."users/root/hashedPassword".path;
     };
 
