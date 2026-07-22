@@ -33,6 +33,8 @@
     settings = {
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
+      PubkeyAuthentication = true;
+      authorizedKeysFile = ".ssh/authorized_keys "
     };
   };
 

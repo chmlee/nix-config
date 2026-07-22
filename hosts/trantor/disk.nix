@@ -42,13 +42,13 @@ in
       } else {
         os = {
           device = prodOsDevice;
-          encrypted = true;
+          encrypted = false;
           keyFile = "/tmp/disko-os.key";
         };
 
         data = {
           device = prodDataDevice;
-          encrypted = true;
+          encrypted = false;
           keyFile = "/tmp/disko-data.key";
         };
       };
