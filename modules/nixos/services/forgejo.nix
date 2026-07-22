@@ -79,6 +79,8 @@ in
     services.forgejo = {
       enable = true;
 
+      stateDir = "/persist/forgejo";  # All Forgejo runtime data goes here
+
       database = {
         type = "postgres";
         name = "forgejo";
@@ -113,6 +115,10 @@ in
         };
       };
     };
+
+    systemd.tmpfiles.rules = [
+      "d /persist/forgejo 0750 forgejo forgejo -"
+    ];
 
     networking.firewall.allowedTCPPorts = [
       sshPort

@@ -9,7 +9,7 @@
     (modulesPath + "/profiles/qemu-guest.nix")
     (modulesPath + "/installer/scan/not-detected.nix")
     ./disk.nix
-    ./impermanence.nix
+    # ./impermanence.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -34,7 +34,7 @@
       PasswordAuthentication = true;
       PermitRootLogin = "yes";
       PubkeyAuthentication = true;
-      authorizedKeysFile = ".ssh/authorized_keys "
+      # authorizedKeysFile = ".ssh/authorized_keys";
     };
   };
 
