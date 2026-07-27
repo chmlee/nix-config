@@ -16,8 +16,6 @@ in
   config = lib.mkIf cfg.enable {
 
     users.users.root = {
-      initialPassword = "changeme";
-      # hashedPasswordFile = config.sops.secrets."users/root/hashedPassword".path;
     };
 
     # 3. Bind to Home Manager (Optional for root, but good to have the toggle)

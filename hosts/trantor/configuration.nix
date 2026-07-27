@@ -10,7 +10,7 @@
     (modulesPath + "/installer/scan/not-detected.nix")
     ./disk.nix
     ./box.nix
-    ./impermanence.nix
+    # ./impermanence.nix
   ];
 
   environment.systemPackages = with pkgs; [
@@ -29,23 +29,32 @@
 
   services.openssh = {
     enable = true;
-    openFirewall = true;
-    ports = [ 22 ];
+    openFirewall = false;
+
     settings = {
-      PasswordAuthentication = true;
-      PermitRootLogin = "yes";
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
       PubkeyAuthentication = true;
+      PermitRootLogin = "prohibit-password";
+    };
+  };
+
+  my.infra = {
+    sops = {
+      enable = true;
+      defaultSopsFile = ../../secrets.yaml;
+      ageKeyFile = "/persist/sops/key.txt";
     };
   };
 
   networking.firewall.allowedTCPPorts = [ 22 ];
 
   users.users.root = {
+    hashedPassword = "!";
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8hnz1WkRNCBybhR+FKJfxt/bxaMeqivBGSz55rIRr7 louis@T14p"
     ];
   };
-  users.users.root.initialPassword = "changeme";
 
   boot.loader.systemd-boot.enable = false;
   boot.loader.grub = {
