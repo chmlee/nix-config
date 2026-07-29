@@ -6,8 +6,7 @@
 }:
 
 let
-  adminSshKey =
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8hnz1WkRNCBybhR+FKJfxt/bxaMeqivBGSz55rIRr7 louis@T14p";
+  adminSshKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIE8hnz1WkRNCBybhR+FKJfxt/bxaMeqivBGSz55rIRr7 louis@T14p";
 in
 {
   imports = [
@@ -119,5 +118,14 @@ in
     acmeEmail = "louis@louisclee.com";
     httpPort = 3000;
     sshPort = 22222;
+  };
+
+  my.services.postgresql.enable = true;
+
+  my.services.immich = {
+    enable = true;
+
+    domain = "photo.louisclee.com";
+    acmeEmail = "louis@louisclee.com";
   };
 }

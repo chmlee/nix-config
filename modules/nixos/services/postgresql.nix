@@ -21,6 +21,7 @@ in
   config = lib.mkIf cfg.enable {
     services.postgresql = {
       enable = true;
+      dataDir = "/var/lib/postgresql";
       ensureDatabases = cfg.ensureDatabases;
       ensureUsers = cfg.ensureUsers;
     };

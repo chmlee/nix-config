@@ -8,5 +8,6 @@
     ./audio.nix
     ./wacom.nix
     ./mullvad.nix
+    ./immich.nix
   ];
 }
