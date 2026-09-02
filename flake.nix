@@ -2,10 +2,11 @@
   description = "My NixOS flake";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
     disko = {
-      url = "github:nix-community/disko/latest";
+      # url = "github:nix-community/disko/latest";
+      url = "github:nix-community/disko/v1.12.0";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -15,7 +16,8 @@
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-25.11";
+      # url = "github:nix-community/home-manager/release-26.05";
+      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -82,37 +84,81 @@
           ]
           ++ modules;
         };
+
+      pkgs = nixpkgs.legacyPackages.${system};
+
+      # mkTrantor =
+      #   entryModule:
+      #   nixpkgs.lib.nixosSystem {
+      #
+      #     specialArgs = {
+      #       inherit inputs self;
+      #     };
+      #
+      #     modules = [
+      #       inputs.disko.nixosModules.disko
+      #       inputs.sops-nix.nixosModules.sops
+      #
+      #       entryModule
+      #     ];
+      #   };
+      #
+      # mkTrantorScript =
+      #   name: path:
+      #   pkgs.writeShellApplication {
+      #     inherit name;
+      #
+      #     runtimeInputs = [
+      #       pkgs.coreutils
+      #       pkgs.git
+      #       pkgs.nix
+      #     ];
+      #
+      #     text = builtins.readFile path;
+      #   };
+      #
+      # trantorVm = mkTrantorScript "trantor-vm" ./hosts/trantor/scripts/run-vm.sh;
+      #
+      # trantorInstallTest = mkTrantorScript "trantor-install-test" ./hosts/trantor/scripts/test-install.sh;
+      #
     in
     {
+      # packages.${system}.nixos-anywhere = nixos-anywhere.packages.${system}.nixos-anywhere;
+      # packages.${system}.trantor-vm = trantorVm;
+      # packages.${system}.trantor-install-test = trantorInstallTest;
 
-      packages.${system}.nixos-anywhere = nixos-anywhere.packages.${system}.default;
-
-      apps.${system}.nixos-anywhere = {
-        type = "app";
-        program = "${self.packages.${system}.nixos-anywhere}/bin/nixos-anywhere";
+      packages.${system} = {
+        nixos-anywhere = nixos-anywhere.packages.${system}.nixos-anywhere;
+        # trantor-vm = trantorVm;
+        # trantor-install-test = trantorInstallTest;
       };
 
       nixosModules.default = import ./modules/nixos;
+
       homeManagerModules.default = import ./modules/home;
 
-      nixosConfigurations.T14p = mkHost {
-        host = "T14p";
+      nixosConfigurations = {
+        T14p = mkHost { host = "T14p"; };
+
+        # trantor = mkTrantor ./hosts/trantor/default.nix;
+        # trantor-init = mkTrantor ./hosts/trantor/init.nix;
+        # trantor-vm-test = mkTrantor ./hosts/trantor/vm-test.nix;
       };
 
-      nixosConfigurations.trantor = mkHost {
-        host = "trantor";
+      # apps.${system} = {
+      #   nixos-anywhere = {
+      #     type = "app";
+      #     program = "${self.packages.${system}.nixos-anywhere}/bin/nixos-anywhere";
+      #   };
+      #   trantor-vm = {
+      #     type = "app";
+      #     program = "${trantorVm}/bin/trantor-vm";
+      #   };
+      #   trantor-install-test = {
+      #     type = "app";
+      #     program = "${trantorInstallTest}/bin/trantor-install-test";
+      #   };
+      # };
 
-        specialArgs = {
-          trantorProfile = "prod";
-        };
-      };
-
-      nixosConfigurations.trantor-vm = mkHost {
-        host = "trantor";
-
-        specialArgs = {
-          trantorProfile = "vm";
-        };
-      };
     };
 }

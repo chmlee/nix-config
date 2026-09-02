@@ -52,7 +52,7 @@ with pkgs.rPackages; [
   stringi
   stringr
   tidyverse
-  waffle
+  # waffle
   languageserver
   knitr
   rmarkdown

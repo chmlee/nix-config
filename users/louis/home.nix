@@ -51,8 +51,10 @@ in
   };
 
   home.packages = with pkgs; [
-    neofetch
+    hyfetch
     ranger
+    smassh
+    vial
     # kdePackages.kdenlive
     shotcut
     entr
@@ -96,6 +98,7 @@ in
     documents = "${config.home.homeDirectory}/doc";
     download = "${config.home.homeDirectory}/down";
     pictures = "${config.home.homeDirectory}/pic";
+    setSessionVariables = true;
     # extraConfig = "${config.home.homeDirectory}/.config";
   };
 

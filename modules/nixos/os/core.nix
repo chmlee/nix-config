@@ -21,16 +21,16 @@ in
       ];
       substituters = [
         "https://cache.nixos.org/"
-        # "https://mirror.sjtu.edu.cn/nix-channels/store"
-        # "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
-        # "https://mirrors.ustc.edu.cn/nix-channels/store"
+        "https://mirror.sjtu.edu.cn/nix-channels/store"
+        "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+        "https://mirrors.ustc.edu.cn/nix-channels/store"
       ];
     };
 
     nixpkgs.config.allowUnfree = true;
 
-    # time.timeZone = "Europe/Amsterdam";
-    time.timeZone = "Asia/Taipei";
+    time.timeZone = "Europe/Amsterdam";
+    # time.timeZone = "Asia/Taipei";
 
     environment.systemPackages = with pkgs; [
       vim

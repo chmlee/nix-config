@@ -1,5 +1,5 @@
 { pkgs }:
-pkgs.python3.withPackages (
+pkgs.python313.withPackages (
   ps: with ps; [
     pynvim
     cairosvg

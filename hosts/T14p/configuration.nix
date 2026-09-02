@@ -95,6 +95,7 @@ in
   programs.sway = {
     enable = true;
   };
+  programs.wshowkeys.enable = true;
   services.displayManager.gdm.enable = true;
 
   boot.loader.systemd-boot.enable = true;

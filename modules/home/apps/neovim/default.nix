@@ -1,4 +1,10 @@
-{ lib, config, pkgs, inputs,... }:
+{
+  lib,
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   nvim-config-store = builtins.filterSource (path: type: baseNameOf path != "default.nix") ./.;
   nvim-config-files = builtins.attrNames (builtins.readDir nvim-config-store);
@@ -10,7 +16,7 @@ let
 in
 {
   options.my.home.apps.neovim = {
-    enable = lib.mkEnableOption "nvim"; 
+    enable = lib.mkEnableOption "nvim";
   };
 
   config = lib.mkIf cfg.enable {
@@ -19,6 +25,7 @@ in
       defaultEditor = true;
 
       plugins = with pkgs.vimPlugins; [
+        codecompanion-nvim
         diffview-nvim
         nvim-treesitter.withAllGrammars
         nvim-lspconfig
@@ -48,8 +55,7 @@ in
         jupytext-nvim
       ];
 
-      extraLuaConfig = nvim-config;
-
+      initLua = nvim-config;
 
       extraPackages = with pkgs; [
         #quarto
@@ -75,21 +81,26 @@ in
         rust-analyzer
       ];
 
-      extraLuaPackages = p: with p; [
-        magick
-      ];
+      extraLuaPackages =
+        p: with p; [
+          magick
+        ];
 
-      extraPython3Packages = ps: with ps; [
-        pynvim
-        jupyter-client
-        python-lsp-server
-        cairosvg
-        pnglatex
-        plotly
-        pyperclip
-        ipython
-        nbformat
-      ];
+      extraPython3Packages =
+        ps: with ps; [
+          pynvim
+          jupyter-client
+          python-lsp-server
+          cairosvg
+          pnglatex
+          plotly
+          pyperclip
+          ipython
+          nbformat
+        ];
+
+      withRuby = false;
+      withPython3 = false;
     };
 
     #sessionVariables = {

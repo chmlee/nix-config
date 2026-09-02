@@ -17,7 +17,10 @@ in
       enable = true;
       keyboards = {
         default = {
-          ids = [ "*" ];
+          ids = [
+            "*"
+            "-55d4:0461"
+          ];
           settings = {
             main = {
               capslock = "layer(control)";
