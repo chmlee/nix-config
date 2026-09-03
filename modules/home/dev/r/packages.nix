@@ -1,6 +1,8 @@
 { pkgs }:
 with pkgs.rPackages; [
   ggplot2
+  Rtsne
+  scales
   keras
   modelsummary
   broom_helpers
@@ -16,7 +18,7 @@ with pkgs.rPackages; [
   rmatio
   ggsurvfit
   pammtools
-  gtsummary
+  # gtsummary
   rstan
   PCovR
   calculus
@@ -81,7 +83,7 @@ with pkgs.rPackages; [
   corrplot
   caret
   skimr
-  dagitty
+  # dagitty
   GGally
   gridExtra
 ]

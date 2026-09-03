@@ -17,7 +17,7 @@
         hide-when-typing = "yes";
       };
 
-      colors = {
+      colors-dark = {
         alpha = 0.95;
 
         background = "1e1e2e";

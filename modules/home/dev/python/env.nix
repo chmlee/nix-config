@@ -8,7 +8,7 @@ pkgs.python313.withPackages (
     seaborn
     keras
     tensorflow
-    scrapy
+    # scrapy
     scikit-learn
     sqlalchemy
     plotly

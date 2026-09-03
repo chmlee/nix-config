@@ -15,6 +15,7 @@ in
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
+      configPath = "${config.xdg.configHome}/mozilla/firefox";
 
       nativeMessagingHosts = [
         pkgs.tridactyl-native

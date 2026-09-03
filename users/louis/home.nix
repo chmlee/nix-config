@@ -18,6 +18,7 @@ in
 {
   home.username = "louis";
   home.homeDirectory = "/home/louis";
+
   home.stateVersion = "25.11";
 
   home.pointerCursor = {
