@@ -99,8 +99,8 @@ in
           nbformat
         ];
 
-      withRuby = false;
-      withPython3 = false;
+      withRuby = true;
+      withPython3 = true;
     };
 
     #sessionVariables = {

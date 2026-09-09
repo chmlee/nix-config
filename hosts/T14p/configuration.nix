@@ -95,6 +95,11 @@ in
   programs.sway = {
     enable = true;
   };
+  programs.niri.enable = true;
+  services.desktopManager.cosmic = {
+    enable = true;
+  };
+  
   programs.wshowkeys.enable = true;
   services.displayManager.gdm.enable = true;
 

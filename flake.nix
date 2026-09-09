@@ -5,6 +5,8 @@
     # nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-26.05";
 
+    nixpkgs-unstable.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     disko = {
       # url = "github:nix-community/disko/latest";
       url = "github:nix-community/disko/v1.12.0";
@@ -40,6 +42,8 @@
       url = "github:nix-community/nixos-anywhere";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    quarto-nixpkgs.url = "github:NixOS/nixpkgs/a4e5ead1d851c82974977697aa298a37381c2bbb";
 
   };
 

@@ -231,6 +231,38 @@
         "type": "github"
       }
     },
+    "nixpkgs-unstable": {
+      "locked": {
+        "lastModified": 1788404924,
+        "narHash": "sha256-lhEhY8X5EgkQ/eg6IFz4cc8jRuSYSvnxx1al7d1dvZ0=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "0968519e14f7aa7d3e9b389682bd74d2b51c8ce8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "quarto-nixpkgs": {
+      "locked": {
+        "lastModified": 1778540617,
+        "narHash": "sha256-/NfWMQ2OVlKEq7RyeTCqZy5ysZkhu6JJXiAtnZCzxQI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a4e5ead1d851c82974977697aa298a37381c2bbb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a4e5ead1d851c82974977697aa298a37381c2bbb",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "disko": "disko",
@@ -239,6 +271,8 @@
         "impermanence": "impermanence",
         "nixos-anywhere": "nixos-anywhere",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-unstable": "nixpkgs-unstable",
+        "quarto-nixpkgs": "quarto-nixpkgs",
         "sops-nix": "sops-nix"
       }
     },

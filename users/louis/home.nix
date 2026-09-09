@@ -18,7 +18,6 @@ in
 {
   home.username = "louis";
   home.homeDirectory = "/home/louis";
-
   home.stateVersion = "25.11";
 
   home.pointerCursor = {
@@ -54,8 +53,10 @@ in
   home.packages = with pkgs; [
     hyfetch
     ranger
+    jq
     smassh
     vial
+    fuzzel
     # kdePackages.kdenlive
     shotcut
     entr

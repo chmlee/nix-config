@@ -18,8 +18,8 @@ in
       keyboards = {
         default = {
           ids = [
-            "*"
-            "-55d4:0461"
+            # "0fac:0ade:bea394c0"
+            "0001:0001:09b4e68d"
           ];
           settings = {
             main = {

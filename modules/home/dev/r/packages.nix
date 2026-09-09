@@ -1,6 +1,18 @@
 { pkgs }:
-with pkgs.rPackages; [
+let
+
+  cmdstanr = import ./cmdstanr.nix { inherit pkgs; };
+in
+with pkgs.rPackages;
+[
   ggplot2
+  forcats
+  ggdist
+  rstan
+  tidybayes
+  sjPlot
+  brms
+  cmdstanr
   Rtsne
   scales
   keras
