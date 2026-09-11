@@ -6,6 +6,9 @@ in
 with pkgs.rPackages;
 [
   ggplot2
+  HSAUR3
+  precrec
+  predtools
   forcats
   ggdist
   rstan
