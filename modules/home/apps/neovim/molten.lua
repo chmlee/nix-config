@@ -4,8 +4,8 @@ vim.g.molten_output_show_exec_time = true
 vim.g.molten_output_win_hide_on_leave = false
 vim.g.molten_use_border_highlights = true
 vim.g.molten_virt_text_output = true
-vim.g.molten_image_provider = "image.nvim"
-vim.g.molten_image_location = "virt"
+-- vim.g.molten_image_provider = "image.nvim"
+-- vim.g.molten_image_location = "both"
 vim.g.molten_output_virt_lines = true
 vim.g.molten_cover_empty_lines = true
 vim.g.molten_output_truncate = "bottom"
@@ -20,16 +20,6 @@ vim.api.nvim_set_hl(0, "FloatBorder", { bg = "#1e1e2e" })
 --     italic = true,
 -- })
 vim.api.nvim_set_hl(0, "MoltenVirtualText", { bg = "#585b70", fg = "#f5e0dc", bold = true })
-
-require("image").setup({
-    editor = {
-        -- force a visible background for plots
-        background = "white", -- or "#ffffff" or "black"
-        inline = {
-            enable = true,
-        },
-    },
-})
 
 vim.keymap.set("n", "<localleader>mi", ":MoltenInit<CR>",
     { silent = true, desc = "Initialize the plugin" })

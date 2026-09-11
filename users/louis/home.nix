@@ -39,6 +39,8 @@ in
     git.enable = true;
     sway.enable = true;
     zotero.enable = true;
+    kitty.enable = true;
+    zellij.enable = true;
   };
 
   my.home.dev = {
@@ -54,9 +56,7 @@ in
     hyfetch
     ranger
     alacritty
-    kitty
     file
-    zellij
     jq
     smassh
     vial
