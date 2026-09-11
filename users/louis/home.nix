@@ -53,7 +53,10 @@ in
   home.packages = with pkgs; [
     hyfetch
     ranger
+    alacritty
+    kitty
     file
+    zellij
     jq
     smassh
     vial
