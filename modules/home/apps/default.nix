@@ -12,5 +12,7 @@
     ./ssh.nix
     ./zotero.nix
     ./foot.nix
+    ./kitty.nix
+    ./zellij.nix
   ];
 }
