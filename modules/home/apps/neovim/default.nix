@@ -25,6 +25,7 @@ in
       defaultEditor = true;
 
       plugins = with pkgs.vimPlugins; [
+        plenary-nvim
         codecompanion-nvim
         diffview-nvim
         nvim-treesitter.withAllGrammars
@@ -58,7 +59,6 @@ in
       initLua = nvim-config;
 
       extraPackages = with pkgs; [
-        #quarto
         inotify-tools
         pyright
         basedpyright

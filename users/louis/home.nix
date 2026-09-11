@@ -53,6 +53,7 @@ in
   home.packages = with pkgs; [
     hyfetch
     ranger
+    file
     jq
     smassh
     vial

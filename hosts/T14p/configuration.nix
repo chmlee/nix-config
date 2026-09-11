@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, config, ... }:
 let
   osDevice = "/dev/disk/by-id/nvme-WDBRPG0010BNC-WRSN_21034A800817";
   dataDevice = "/dev/disk/by-id/nvme-UMIS_RPJYJ1T24MML1AWQ_SS1D71533X1RC53B20DD";
@@ -99,7 +99,7 @@ in
   services.desktopManager.cosmic = {
     enable = true;
   };
-  
+
   programs.wshowkeys.enable = true;
   services.displayManager.gdm.enable = true;
 
@@ -107,5 +107,30 @@ in
   boot.loader.efi.canTouchEfiVariables = true;
   hardware.enableAllFirmware = true;
 
+  # # Use a more stable kernel (e.g., LTS 6.1)
+  # boot.kernelPackages = pkgs.linuxPackages_6_1;
+  #
+  # # Add i915 kernel parameters to mitigate issues
+  # boot.kernelParams = [
+  #   "i915.enable_psr=0" # Disable Panel Self Refresh (can cause freezes)
+  #   "i915.enable_fbc=0" # Disable Frame Buffer Compression
+  #   "i915.enable_rc6=0" # Disable RC6 power savings (temporarily)
+  #   "i915.enable_dc=0" # Disable Display C-states
+  #   "pcie_aspm=off" # Already in your hardware-configuration.nix
+  # ];
+  #
+  # # Ensure Intel media driver is included
+  # hardware.graphics.extraPackages = with pkgs; [
+  #   intel-media-driver
+  #   libva-utils
+  #   intel-vaapi-driver
+  # ];
+  #
+  # hardware.cpu.intel.updateMicrocode = true;
+  # powerManagement.enable = false;
+  #
+  # # Enable redistributable firmware (for microcode)
+  # hardware.enableRedistributableFirmware = true;
+  #
   system.stateVersion = "25.11";
 }
