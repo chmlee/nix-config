@@ -1,14 +1,19 @@
 require("codecompanion").setup({
-  interactions = {
-    chat = {
-      adapter = "openai",
-      model = "mistral-small",
-      -- Move these inside the chat table:
-      api_key = vim.env.MISTRAL_API_KEY,  -- Use vim.env instead of os.getenv
-      base_url = "https://api.mistral.ai/v1",
-    },
+  adapters = {
+    mistral = function()
+      return require("codecompanion.adapters").extend("openai_compatible", {
+        env = {
+          api_key = "MISTRAL_API_KEY",
+          url = "https://api.mistral.ai/v1",
+          chat_url = "/chat/completions",
+        },
+        name = "mistral",
+        schema = { model = { default = "mistral-small-latest" } },
+      })
+    end,
   },
-  opts = {
-    log_level = "DEBUG",
+  strategies = {
+    chat = { adapter = "mistral" },
+    inline = { adapter = "mistral" },
   },
 })
