@@ -97,6 +97,7 @@ in
           pyperclip
           ipython
           nbformat
+          pillow
         ];
 
       withRuby = true;

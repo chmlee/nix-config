@@ -92,13 +92,13 @@ in
 
   networking.hostName = "T14p";
 
-  programs.sway = {
-    enable = true;
-  };
+  # programs.sway = {
+  #   enable = true;
+  # };
   programs.niri.enable = true;
-  services.desktopManager.cosmic = {
-    enable = true;
-  };
+  # services.desktopManager.cosmic = {
+  #   enable = true;
+  # };
 
   programs.wshowkeys.enable = true;
   services.displayManager.gdm.enable = true;
