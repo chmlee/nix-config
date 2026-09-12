@@ -1,9 +1,25 @@
-local function slugify(s)
-  s = s:gsub("%.xopp$", ""):gsub("%.pdf$", ""):gsub("%.png$", "")
-  s = s:gsub("%s+", "-")
-  s = s:gsub("[^%w%-_]", "-")
-  s = s:lower()
-  return s
+local function fig_id(name)
+  name = name:gsub("^%s+", ""):gsub("%s+$", "")
+  name = name:gsub("^figures/", "")
+  name = name:gsub("%.xopp$", ""):gsub("%.pdf$", ""):gsub("%.png$", "")
+  name = name:gsub("[^%w%-_]", "-")
+  name = name:gsub("%s+", "-")
+  name = name:lower()
+  return name
+end
+
+local function xournal_blank_template()
+  return table.concat({
+    '<?xml version="1.0" standalone="no"?>',
+    '<xournal creator="Xournal++" fileversion="4">',
+    '<title>Xournal++ document - see https://github.com/xournalpp/xournalpp</title>',
+    '<page width="595.27559" height="841.88976">',
+    '<background type="solid" color="white" style="plain" />',
+    '<layer />',
+    '</page>',
+    '</xournal>',
+    '',
+  }, "\n")
 end
 
 vim.api.nvim_create_user_command("Xournal", function(opts)
@@ -21,6 +37,20 @@ vim.api.nvim_create_user_command("Xournal", function(opts)
   vim.fn.mkdir(dir, "p")
 
   local file = dir .. "/" .. name
+
+  -- seed a minimal valid .xopp so xournalpp opens an existing file
+  -- instead of an untitled doc that needs renaming on save
+  if vim.fn.filereadable(file) == 0 then
+    local f = io.open(file, "w")
+    if f then
+      f:write(xournal_blank_template())
+      f:close()
+    else
+      vim.notify("Could not create " .. file, vim.log.levels.ERROR)
+      return
+    end
+  end
+
   vim.fn.jobstart({ "xournalpp", file }, { detach = true })
 end, {
   nargs = "?",
@@ -28,8 +58,8 @@ end, {
 })
 
 vim.api.nvim_create_user_command("QFig", function(opts)
-  local base = slugify(opts.args)
-  local id = base:gsub("_", "-")
+  local base = fig_id(opts.args)
+  local id = base
 
   local lines = {
     "![TODO caption](figures/" .. base .. ".pdf){#fig-" .. id .. " width=70%}",
@@ -136,57 +166,50 @@ vim.api.nvim_create_user_command("XournalWatchStop", function()
   vim.notify("Stopped Xournal++ watcher", vim.log.levels.INFO)
 end, {})
 
-local function get_xournal_name_from_line()
+local function figure_path_from_line()
   local line = vim.api.nvim_get_current_line()
-  local col = vim.fn.col(".")
 
-  -- First try filename under cursor
-  local word = vim.fn.expand("<cfile>")
-
-  if word ~= nil and word ~= "" then
-    if word:match("%.xopp$") or word:match("%.pdf$") or word:match("%.png$") then
-      return word
-    end
+  local path = line:match("%(figures/([%w%-%_%.]+)%)")
+  if path then
+    return "figures/" .. path
   end
 
-  -- Then try to find a figure path/name anywhere on the line
-  local patterns = {
-    "[%w%-%_%.%/]+%.xopp",
-    "[%w%-%_%.%/]+%.pdf",
-    "[%w%-%_%.%/]+%.png",
-    "figures/[%w%-%_%.%/]+",
-  }
-
-  for _, pattern in ipairs(patterns) do
-    local start_pos, end_pos = line:find(pattern)
-    if start_pos then
-      -- If cursor is on the same line, accept it
-      local name = line:sub(start_pos, end_pos)
-      return name
-    end
+  path = line:match("figures/([%w%-%_%.]+)%s*")
+  if path then
+    return "figures/" .. path
   end
 
-  -- Last fallback: current word, even without extension
-  if word ~= nil and word ~= "" then
-    return word
+  local tok = line:match("([%w%-%_%.%/]+%.xopp)")
+      or line:match("([%w%-%_%.%/]+%.pdf)")
+      or line:match("([%w%-%_%.%/]+%.png)")
+  if tok then
+    return tok
   end
 
   return nil
 end
 
 local function open_xournal_from_context()
-  local name = get_xournal_name_from_line()
+  local name = figure_path_from_line()
 
   if not name then
-    vim.notify("No figure filename found under cursor or on line", vim.log.levels.WARN)
+    local word = vim.fn.expand("<cWORD>")
+    if word and word ~= "" then
+      name = fig_id(word)
+    end
+  end
+
+  if not name or name == "" then
+    vim.notify("No figure name found on line or under cursor", vim.log.levels.WARN)
     return
   end
 
-  -- Normalize Quarto image references like figures/foo.pdf -> foo.xopp
   name = name:gsub("^%./", "")
   name = name:gsub("^figures/", "")
-  name = name:gsub("%.pdf$", ".xopp")
-  name = name:gsub("%.png$", ".xopp")
+  name = name:gsub("%.pdf$", ".xopp"):gsub("%.png$", ".xopp")
+  if not name:match("%.xopp$") then
+    name = name .. ".xopp"
+  end
 
   vim.cmd("Xournal " .. vim.fn.fnameescape(name))
 end
@@ -237,13 +260,7 @@ local function qfig_from_context()
     return
   end
 
-  name = name:gsub("^%s+", ""):gsub("%s+$", "")
-  name = name:gsub("^figures/", "")
-  name = name:gsub("%.xopp$", "")
-  name = name:gsub("%.pdf$", "")
-  name = name:gsub("%.png$", "")
-
-  vim.cmd("QFig " .. vim.fn.fnameescape(name))
+  vim.cmd("QFig " .. vim.fn.fnameescape(fig_id(name)))
 end
 
 vim.keymap.set("n", "<C-y>,", qfig_from_context, {

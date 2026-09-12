@@ -21,11 +21,15 @@ in
   };
 
   config = lib.mkIf cfg.enable {
+    programs.zsh.shellAliases.zq = "zellij --layout quarto --session";
+
     programs.zellij = {
       enable = true;
       package = zellijPkg;
 
-      enableZshIntegration = true;
+      # disabled so zellij does not auto-launch on every terminal open;
+      # launch manually with the `zq` alias instead
+      enableZshIntegration = false;
 
       settings = {
         default_shell = "${pkgs.zsh}/bin/zsh";
@@ -35,6 +39,27 @@ in
 
         # pane frames confuse image.nvim's window-offset math, so hide them
         pane_frames = false;
+      };
+
+      layouts = {
+        quarto = {
+          layout = {
+            _children = [
+              {
+                pane = {
+                  command = "nvim";
+                  size = "70%";
+                };
+              }
+              {
+                pane = {
+                  command = "zsh";
+                  size = "30%";
+                };
+              }
+            ];
+          };
+        };
       };
     };
   };
