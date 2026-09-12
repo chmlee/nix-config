@@ -14,5 +14,6 @@
     ./foot.nix
     ./kitty.nix
     ./zellij.nix
+    ./vscode.nix
   ];
 }
