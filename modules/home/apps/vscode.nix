@@ -40,11 +40,19 @@ in
           "vscode-neovim.neovimExecutablePaths.linux" = "${pkgs.neovim}/bin/nvim";
           # Run neovim --clean inside VS Code: pure keybindings, no plugin load.
           "vscode-neovim.neovimClean" = true;
+          # jk in insert mode sends <Esc>, matching the nvim config
+          # (init.lua: vim.keymap.set('i', 'jk', '<Escape>')).
+          "vscode-neovim.compositeKeys" = {
+            "jk" = {
+              command = "vscode-neovim.escape";
+              args = [ ];
+            };
+          };
 
-          "editor.lineNumbers" = "relative";
+          "editor.lineNumbers" = "on";
           "editor.formatOnSave" = true;
           "editor.fontFamily" = "'FiraCode Nerd Font', monospace";
-          "editor.fontSize" = 12;
+          "editor.fontSize" = 14;
           "editor.tabSize" = 2;
           "editor.insertSpaces" = true;
           "editor.rulers" = [
@@ -63,6 +71,12 @@ in
             "**/CVS" = true;
             "**/.DS_Store" = true;
           };
+
+          # Pin the vscode-neovim background process to a CPU affinity for speed.
+          # Set here because VS Code can't write to the home-managed settings.json.
+          "extensions.experimental.affinity" = {
+            "asvetliakov.vscode-neovim" = 1;
+          };
         };
 
         keybindings = [
@@ -70,6 +84,67 @@ in
             key = "ctrl+j";
             command = "workbench.action.terminal.toggleTerminal";
             when = "terminalProcessSupported || webExtensionActivated";
+          }
+
+          # --- Jupyter notebook: browser-Jupyter-style cell navigation ---
+          # Esc exits cell edit mode -> command mode (cell selected, not editing).
+          {
+            key = "escape";
+            command = "notebook.cell.quitEdit";
+            when = "inputFocus && notebookEditorFocused";
+          }
+          # Enter a selected cell to edit it.
+          {
+            key = "enter";
+            command = "notebook.cell.edit";
+            when = "notebookCellListFocused && notebookEditorFocused && !inputFocus";
+          }
+          # j / k move between cells in command mode (cursor not in a cell).
+          {
+            key = "j";
+            command = "notebook.cell.navigateDown";
+            when = "notebookEditorFocused && !inputFocus";
+          }
+          {
+            key = "k";
+            command = "notebook.cell.navigateUp";
+            when = "notebookEditorFocused && !inputFocus";
+          }
+          # VS Code has no notebook.cell.navigate* command; the cell list is a list
+          # widget, so use the generic list.down / list.up scoped to the notebook.
+          {
+            key = "j";
+            command = "runCommands";
+            args = {
+              commands = [
+                "notebook.focusNextEditor"
+                "notebook.cell.quitEdit"
+              ];
+            };
+            when = "notebookEditorFocused && !inputFocus";
+          }
+          {
+            key = "k";
+            command = "runCommands";
+            args = {
+              commands = [
+                "notebook.focusPreviousEditor"
+                "notebook.cell.quitEdit"
+              ];
+            };
+            when = "notebookEditorFocused && !inputFocus";
+          }
+          # Shift+Enter: run cell and select the one below (browser Jupyter default).
+          {
+            key = "shift+enter";
+            command = "notebook.cell.executeAndSelectBelow";
+            when = "notebookCellListFocused && notebookCellType == 'code' && notebookKernelCount > 0";
+          }
+          # Ctrl+Enter: run cell and stay on it.
+          {
+            key = "ctrl+enter";
+            command = "notebook.cell.execute";
+            when = "notebookCellListFocused && notebookCellType == 'code' && notebookKernelCount > 0";
           }
         ];
       };
