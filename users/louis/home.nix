@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  inputs,
   ...
 }:
 {
@@ -9,6 +10,7 @@
   home.stateVersion = "25.11";
 
   home.pointerCursor = {
+    enable = true;
     name = "Adwaita";
     package = pkgs.adwaita-icon-theme;
     size = 24;
@@ -23,13 +25,18 @@
     zsh.enable = true;
     firefox.enable = true;
     neovim.enable = true;
-    ssh.enable = true;
+    ssh = {
+      enable = true;
+      liacsUsername = "s4888065";
+    };
+    # ssh.enable = true;
     git.enable = true;
     sway.enable = true;
     zotero.enable = true;
     kitty.enable = true;
     zellij.enable = true;
     vscode.enable = true;
+    pi-coding-agent.enable = true;
   };
 
   my.home.dev = {
@@ -41,49 +48,55 @@
     # QUARTO_R = "/etc/profiles/per-user/louis/bin/R";
   };
 
-  home.packages = with pkgs; [
-    hyfetch
-    ranger
-    alacritty
-    file
-    jq
-    smassh
-    vial
-    fuzzel
-    # kdePackages.kdenlive
-    shotcut
-    entr
-    inetutils
-    lazygit
-    audacity
-    gzip
-    poetry
-    cmdstan
-    stanc
-    asciinema
-    asciinema-agg
-    vlc
-    readest
-    kdePackages.kate
-    yt-dlp
-    mpv
-    youtube-tui
-    joshuto
-    unzip
-    chromium
-    pandoc
-    libreoffice
-    btop
-    ripgrep-all
-    rnote
-    opentabletdriver
-    xournalpp
-    pdftk
-    pcmanfm
-    zathura
-    sqlitebrowser
-    kdePackages.okular
-  ];
+  home.packages =
+    let
+      unstable = inputs.nixpkgs-unstable.legacyPackages.${pkgs.system};
+    in
+    with pkgs;
+    [
+      hyfetch
+      ranger
+      # unstable.pi-coding-agent
+      alacritty
+      file
+      jq
+      smassh
+      vial
+      fuzzel
+      # kdePackages.kdenlive
+      shotcut
+      entr
+      inetutils
+      lazygit
+      audacity
+      gzip
+      poetry
+      cmdstan
+      stanc
+      asciinema
+      asciinema-agg
+      vlc
+      readest
+      kdePackages.kate
+      yt-dlp
+      mpv
+      youtube-tui
+      joshuto
+      unzip
+      chromium
+      pandoc
+      libreoffice
+      btop
+      ripgrep-all
+      rnote
+      opentabletdriver
+      xournalpp
+      pdftk
+      pcmanfm
+      zathura
+      sqlitebrowser
+      kdePackages.okular
+    ];
 
   xdg.enable = true;
 

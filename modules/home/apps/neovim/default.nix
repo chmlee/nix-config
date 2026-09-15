@@ -25,7 +25,9 @@ in
       defaultEditor = true;
 
       plugins = with pkgs.vimPlugins; [
+        render-markdown-nvim
         plenary-nvim
+        luasnip
         codecompanion-nvim
         diffview-nvim
         nvim-treesitter.withAllGrammars

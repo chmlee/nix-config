@@ -13,7 +13,19 @@ require("codecompanion").setup({
     end,
   },
   strategies = {
-    chat = { adapter = "mistral" },
+    chat   = { adapter = "mistral" },
     inline = { adapter = "mistral" },
+    agent  = { adapter = "mistral" },
+    cli    = {
+      agent = "pi",
+      agents = {
+        pi = {
+          cmd = "pi",
+          args = {},
+          description = "Pi coding agent",
+        },
+      },
+    },
   },
+  opts = { log_level = "DEBUG" },
 })

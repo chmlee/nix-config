@@ -33,6 +33,8 @@ in
           ms-toolsai.jupyter-renderers
           # Python language server, linting, and debugging.
           ms-python.python
+
+          ms-vscode-remote.remote-ssh
         ];
 
         userSettings = {
