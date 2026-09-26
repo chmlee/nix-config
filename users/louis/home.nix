@@ -36,7 +36,7 @@
     kitty.enable = true;
     zellij.enable = true;
     vscode.enable = true;
-    pi-coding-agent.enable = true;
+    # pi-coding-agent.enable = true;
   };
 
   my.home.dev = {
@@ -56,6 +56,7 @@
     [
       hyfetch
       ranger
+      sshfs
       # unstable.pi-coding-agent
       alacritty
       file

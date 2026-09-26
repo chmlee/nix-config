@@ -122,6 +122,8 @@ in
 
   my.services.postgresql.enable = true;
 
+  my.services.librechat.enable = false;
+
   my.services.immich = {
     enable = true;
 

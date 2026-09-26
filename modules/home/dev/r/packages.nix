@@ -6,6 +6,9 @@ in
 with pkgs.rPackages;
 [
   ggplot2
+  gifski
+  readxl
+  smacof
   HSAUR3
   precrec
   predtools

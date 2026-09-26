@@ -5,7 +5,7 @@ vim.g.molten_output_win_hide_on_leave = false
 vim.g.molten_use_border_highlights = true
 vim.g.molten_virt_text_output = true
 -- vim.g.molten_image_provider = "image.nvim"
--- vim.g.molten_image_location = "both"
+-- vim.g.molten_image_location = "virt"
 vim.g.molten_output_virt_lines = true
 vim.g.molten_cover_empty_lines = true
 vim.g.molten_output_truncate = "bottom"
@@ -36,4 +36,4 @@ vim.keymap.set("n", "<localleader>rd", ":MoltenDelete<CR>",
 vim.keymap.set("n", "<localleader>oh", ":MoltenHideOutput<CR>",
     { silent = true, desc = "hide output" })
 vim.keymap.set("n", "<localleader>os", ":noautocmd MoltenEnterOutput<CR>",
-    { silent = true, desc = "show/enter output" })
+    { silent = e, desc = "show/enter output" })

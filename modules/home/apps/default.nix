@@ -15,6 +15,6 @@
     ./kitty.nix
     ./zellij.nix
     ./vscode.nix
-    ./pi.nix
+    # ./pi.nix
   ];
 }

@@ -75,6 +75,7 @@ in
     audio.enable = true;
     wacom.enable = true;
     mullvad.enable = true;
+    librechat.enable = false;
   };
 
   users.mutableUsers = false;

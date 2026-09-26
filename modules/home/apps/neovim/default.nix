@@ -13,6 +13,24 @@ let
 
   cfg = config.my.home.apps.neovim;
 
+  utftex = pkgs.stdenv.mkDerivation rec {
+    pname = "libtexprintf";
+    version = "1.27";
+    src = pkgs.fetchFromGitHub {
+      owner = "bartp5";
+      repo = "libtexprintf";
+      rev = "refs/tags/v${version}";
+      hash = "sha256-5C3VZWxbxNHxQcQdeeHh/etwIqfqUed9kHvRf2TVilE=";
+    };
+    nativeBuildInputs = with pkgs; [
+      autoreconfHook
+      pkg-config
+    ];
+    buildInputs = [ pkgs.glib ];
+    # binary is installed as `utftex`, which is what render-markdown.nvim calls
+    meta.mainProgram = "utftex";
+  };
+
 in
 {
   options.my.home.apps.neovim = {
@@ -64,6 +82,8 @@ in
         inotify-tools
         pyright
         basedpyright
+        ltex-ls-plus
+        utftex
         python3Packages.python-lsp-server
         ripgrep
         lua-language-server
@@ -92,6 +112,7 @@ in
         ps: with ps; [
           pynvim
           jupyter-client
+          jupyter-cache
           python-lsp-server
           cairosvg
           pnglatex

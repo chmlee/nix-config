@@ -21,6 +21,23 @@ vim.lsp.config("basedpyright", {
 vim.lsp.enable("basedpyright")
 
 
+vim.lsp.config('ltex_plus', {
+  capabilities = capabilities,
+  settings = {
+    ltex = {
+      language = 'en-US',
+      -- optional niceties
+      checkFrequency = 'save',
+      diagnosticSeverity = 'information',
+      additionalRules = {
+        enablePickyRules = true,   -- true if you want stricter grammar
+        motherTongue = 'nl-NL',     -- optional: helps catch false friends (you're in NL)
+      },
+    }
+  },
+})
+vim.lsp.enable('ltex_plus')
+
 
 vim.opt.completeopt = { "menu", "menuone", "noselect" }
 

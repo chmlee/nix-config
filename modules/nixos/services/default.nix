@@ -9,5 +9,6 @@
     ./wacom.nix
     ./mullvad.nix
     ./immich.nix
+    ./librechat.nix
   ];
 }

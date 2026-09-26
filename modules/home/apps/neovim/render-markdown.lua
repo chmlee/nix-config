@@ -21,7 +21,7 @@ require('render-markdown').setup({
     -- Only intended to be used for plugin development / debugging.
     log_runtime = false,
     -- Filetypes this plugin will run on.
-    file_types = { 'markdown', 'quarto' },
+    file_types = { 'markdown', 'quarto', 'codecompanion' },
     -- Maximum file size (in MB) that this plugin will attempt to render.
     -- File larger than this will effectively be ignored.
     max_file_size = 10.0,
@@ -297,7 +297,7 @@ require('render-markdown').setup({
         -- Width of the code block background.
         -- | block | width of the code block  |
         -- | full  | full width of the window |
-        width = 'full',
+        width = '79',
         -- Amount of margin to add to the left of code blocks.
         -- If a float < 1 is provided it is treated as a percentage of available window space.
         -- Margin available space is computed after accounting for padding.
@@ -315,7 +315,7 @@ require('render-markdown').setup({
         -- | thick | use the same highlight as the code body              |
         -- | thin  | when lines are empty overlay the above & below icons |
         -- | hide  | conceal lines unless language name or icon is added  |
-        border = 'hide',
+        border = 'thick',
         -- Used above code blocks to fill remaining space around language.
         language_border = '█',
         -- Added to the left of language.
@@ -594,6 +594,7 @@ require('render-markdown').setup({
         check     = { raw = '[!CHECK]',     rendered = '󰄬 Check',     highlight = 'RenderMarkdownSuccess', category = 'obsidian' },
         done      = { raw = '[!DONE]',      rendered = '󰄬 Done',      highlight = 'RenderMarkdownSuccess', category = 'obsidian' },
         question  = { raw = '[!QUESTION]',  rendered = '󰘥 Question',  highlight = 'RenderMarkdownWarn',    category = 'obsidian' },
+        answer    = { raw = '[!ANSWER]',    rendered = '󰃠 Answer',    highlight = 'RenderMarkdownSuccess', category = 'obsidian' },
         help      = { raw = '[!HELP]',      rendered = '󰘥 Help',      highlight = 'RenderMarkdownWarn',    category = 'obsidian' },
         faq       = { raw = '[!FAQ]',       rendered = '󰘥 Faq',       highlight = 'RenderMarkdownWarn',    category = 'obsidian' },
         attention = { raw = '[!ATTENTION]', rendered = '󰀪 Attention', highlight = 'RenderMarkdownWarn',    category = 'obsidian' },
@@ -820,3 +821,5 @@ require('render-markdown').setup({
         render_modes = false,
     },
 })
+
+vim.api.nvim_set_hl(0, 'RenderMarkdownCode', { bg = '#45475a' })  -- surface1

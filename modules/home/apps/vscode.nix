@@ -35,6 +35,7 @@ in
           ms-python.python
 
           ms-vscode-remote.remote-ssh
+          detachhead.basedpyright
         ];
 
         userSettings = {
