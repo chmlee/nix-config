@@ -19,7 +19,14 @@ in
 
   config = lib.mkIf cfg.enable {
     networking.networkmanager.enable = true;
-    networking.firewall.enable = false;
+    # networking.firewall.enable = false;
+
+    networking.nat = {
+      enable = true;
+      externalInterface = "wlp0s20f3";
+      internalInterfaces = [ "ve-librechat" ];
+    };
+    networking.firewall.enable = true;
 
     programs.mtr.enable = true;
     services.openssh.enable = true;
